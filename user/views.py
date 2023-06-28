@@ -1,6 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import authenticate,login,logout,get_user_model
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .models import Bookings
 # Create your views here.
 
 User=get_user_model()
@@ -51,3 +53,30 @@ def signup_user(request):
             print(user)
             messages.info(request,"User already exists")
             return redirect("login")
+
+@login_required(login_url="/login")
+def user_profile(request):
+    user=request.user
+    booking=Bookings.objects.filter(user_id=user)
+    total_booking=len(booking)
+    data={
+        "name":user.name,
+        "email":user.email,
+        "phone_number":user.phone_number,
+        "bookings":booking,
+        "total_booking":total_booking
+    }
+    return render(request,"profile.html",context=data)
+
+@login_required(login_url="/login")
+def booking_details(request,id):
+    user=request.user
+    try:
+        booking=Bookings.objects.get(id=id)
+    except:
+        raise ValueError("Invalid booking Id")
+    if user!=booking.user_id:
+        return HttpResponse("<h1>You are not authorized to view this page</h1>")
+    print(booking.passengers_names)
+    return render(request,"booking-detail.html",context={"booking":booking})
+    

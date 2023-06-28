@@ -61,7 +61,7 @@ class Bookings(models.Model):
     user_id=models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)
     travel=models.ForeignKey(Travel,on_delete=models.SET_NULL,blank=True,null=True)
     passengers_count=models.PositiveIntegerField(default=1)
-    Passengers=models.ManyToManyField(Passengers)
+    passengers_names=models.ManyToManyField(Passengers)
 
     def __str__(self):
         return str(self.user_id)+str(self.id)

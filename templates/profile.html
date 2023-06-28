@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% block main %}
+<div class="jumbotron container">
+    <div class="jumbotron">
+        <h2 class="display-4">Profile</h2>
+        <p class="lead">Name: {{name}}</p>
+        <p class="lead">Email: {{email}}</p>
+        <p class="lead">Phone Number: {{phone_number}}</p>
+        
+        <hr class="my-4">
+      
+        <h2>Past Bookings | Total Bookings:{{total_booking}}</h2>
+      <ul class="list-group">
+        {% for booking in bookings %}
+        <li class="list-group-item"><a href="{% url 'booking-detail' booking.id %}">Booking id:{{ booking.id}} Date:{{ booking.travel.date }}</a>
+            </li>
+        {% endfor %}
+      </ul>
+      </div>
+  </div>
+{% endblock main %}

@@ -1,0 +1,23 @@
+{% extends 'home.html' %}
+{% block main %}
+<div class="jumbotron container">
+    <div class="jumbotron">
+        <h2 class="display-4">Booking Details</h2>
+        <p class="lead">Booking Id:     {{booking.id}}</p>
+        <p class="lead">User:           {{booking.user_id.name}}</p>
+        <p class="lead">Date of Travel: {{booking.travel.date}}</p>
+        <p class="lead">From :          {{booking.travel.flight_id.source.name}}</p>
+        <p class="lead">To :            {{booking.travel.flight_id.destination.name}}</p>
+        <p class="status">Status:       {{booking.travel.status}}</p>
+        <hr class="my-4">
+      
+        <h2>List of Passengers</h2>
+      <ul class="list-group">
+        {% for passenger in bookings.passengers %}
+        <li class="list-group-item">{{ passenger.name}} 
+            </li>
+        {% endfor %}
+      </ul>
+      </div>
+  </div>
+{% endblock main %}
