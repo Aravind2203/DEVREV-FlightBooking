@@ -1,0 +1,28 @@
+{% extends 'home.html' %}
+{% block main %}
+<div class="jumbotron container">
+    <form class="form container" method="post" action="/signup">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name-user">Name</label>
+        <input type="text" class="form-control" id="name-user" name="name" onkeydown="return /[a-zA-Z]/i.test(event.key)" required>
+      </div>
+      <div class="form-group">
+        <label for="phone-user">Phone Number</label>
+        <input type="text" class="form-control" id="phone-user" name="phone_number" pattern="[0-9]{10}" title="Enter only numbers, Maximum 10 characters" required>
+      </div>
+        <div class="form-group">
+          <label for="email-user">Email</label>
+          <input type="email" class="form-control" id="email-user" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="pass-user">Password</label>
+          <input type="password" class="form-control" id="pass-user" name="password" minlength="8" required>
+          <ul>
+            <li>Minimum 8 characters    </li>
+          </ul>
+        </div>
+        <button type="submit" class="btn btn-default">Sign Up</button>
+      </form>
+  </div>
+{% endblock main %}
