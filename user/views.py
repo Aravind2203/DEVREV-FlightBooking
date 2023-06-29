@@ -6,12 +6,15 @@ from .models import Bookings,Travel,Airports,Passengers
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from .utils import render_to_pdf
+
 # Create your views here.
 
 User=get_user_model()
 def home(request):
     airports=Airports.objects.all()
-    return render(request,"home.html",context={"airports":airports})
+    today=datetime.now().date()
+    travels=Travel.objects.filter(date=today)
+    return render(request,"home.html",context={"airports":airports,"travels":travels})
 
 def searchFlights(request):
     if request.method=="POST":

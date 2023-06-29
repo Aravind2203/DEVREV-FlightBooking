@@ -97,7 +97,7 @@
         <button type="button" class="btn btn-danger" id="del">Del Passenger </button>
         <hr>
 
-        <div id="passenger-group">
+        <div id="passenger-group12345">
             
             <div class="form-group">
                 <label>Name:</label>
@@ -120,7 +120,7 @@
         let form_ele=`<label>Name:</label><input type="text" name="name-${count+1}" id="name-${count+1}" required><label>Age:</label><input type="number" name="age-${count+1}" id="age-${count+1}" required>`
         f_group.setAttribute("class","form-group")
         f_group.innerHTML=form_ele
-        document.getElementById("passenger-group").appendChild(f_group)
+        document.getElementById("passenger-group12345").appendChild(f_group)
         count=count+1;
         document.getElementById("number-pass").value=count
         }
@@ -193,9 +193,13 @@
     })
 
     document.getElementById("del").addEventListener("click",(e)=>{
-        let pg=document.getElementById("passenger-group")
-        if(pg.lastChild!=pg.firstChild){
+        console.log("here")
+        let pg=document.getElementById("passenger-group12345")
+        console.log(pg.childElementCount)
+        if(pg.childElementCount>1){
             pg.removeChild(pg.lastChild)
+            
+            
             count=count-1
             document.getElementById("number-pass").value=count  
             

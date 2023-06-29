@@ -69,6 +69,32 @@
                 <button type="submit" class="btn btn-default">Search Flights</button>
               </form>
           </div>
+          <div class="container">
+          <h1>Todays Flights</h1>
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th scope="col">Flight Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scopr="col">Airline</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for travel in travels %}
+              <tr>
+                <th scope="row">{{travel.flight_id.name}}</th>
+                <td>{{travel.date}}</td>
+                <td>{{travel.flight_id.source}}</td>
+                <td>{{travel.flight_id.destination.name}}</td>
+                
+                <td>{{travel.flight_id.airline.name}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          </div>
           {% endblock main %}
     </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
