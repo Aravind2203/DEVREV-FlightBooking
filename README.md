@@ -41,8 +41,7 @@ The application is deployed on pythonanwhere cloud server.
 - User registration and authentication
 - Search and browse available flights
 - Book flights and manage reservations
-- View and update personal information
-- View and cancel existing bookings
+- Generate PDF Invoices
 - Admin dashboard for flight management
 
 ## Installation
