@@ -2,9 +2,18 @@
 <html>
     <head>
         <title>pdf</title>
+        
+        <style>
+            table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+        </style>
     </head>
     <body>
-        <h1>Booking Details</h1>
+        <h1>DEVREV Fight System</h1>
+        <h2>Booking Details</h2>
+        <h3>USER: {{booking.user_id.name}}</h3>
         <div class="jumbotron container">
             <div class="jumbotron">
                 
@@ -12,7 +21,8 @@
                   <thead>
                     <tr>
                       <th scope="col">Booking Id:</th>
-                      <th scope="col">User</th>
+                      <th scope="col">Flight</th>
+                      <th scope="col">Airline</th>
                       <th scope="col">Date of Travel</th>
                       <th scope="col">From</th>
                       <th scope="col">To</th>
@@ -23,7 +33,9 @@
                       
                     <tr>
                       <th scope="row">{{booking.id}}</th>
-                      <td>{{booking.user_id.name}}</td>
+                      <th>{{booking.travel.flight_id.name}}</th>
+                      <td>{{booking.travel.flight_id.airline.name}}</td>
+                      
                       <td>{{booking.travel.date}}</td>
                       <td>{{booking.travel.flight_id.source.name}}</td>
                       <td>{{booking.travel.flight_id.destination.name}}</td>

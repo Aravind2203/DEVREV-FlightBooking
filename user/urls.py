@@ -10,4 +10,5 @@ urlpatterns = [
     path("profile",user_profile,name="profile"),
     path("booking-details/<int:id>",booking_details,name="booking-detail"),
     path("book/<int:id>",book_flight,name="book"),
+    path("pdf/<int:id>",getPdf,name="get-pdf"),
 ]

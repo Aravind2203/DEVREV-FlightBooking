@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Bookings,Travel,Airports,Passengers
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from .utils import render_to_pdf
 # Create your views here.
 
 User=get_user_model()
@@ -131,3 +132,16 @@ def book_flight(request,id):
         messages.info(request,"Booked Successfully")
         
     return render(request,"book.html",context={"travel":travel})
+
+@login_required(login_url="/login")
+def getPdf(request,id):
+    user=request.user
+    try:
+        booking=Bookings.objects.get(id=id)
+    except:
+        raise ValueError("Invalid booking Id")
+    if user!=booking.user_id:
+        return HttpResponse("<h1>You are not authorized to view this page</h1>")
+    passengers=booking.passengers_names.all()
+    pdf=render_to_pdf("pdf.html",context={"booking":booking,"passengers":passengers})
+    return HttpResponse(pdf,content_type="application/pdf")
