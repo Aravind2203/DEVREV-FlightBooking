@@ -73,4 +73,6 @@ The application is deployed on pythonanwhere cloud server.
 
 5. Visit localhost:8000 in your browser
 
+## DBSchema
+
 ![FlighBooking App](https://github.com/Aravind2203/DEVREV-FlightBooking/assets/71716685/6fe46c23-c985-4834-95a0-9be472d0a139)
