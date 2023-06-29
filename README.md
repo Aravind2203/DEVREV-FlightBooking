@@ -1,4 +1,4 @@
-# DevRev Flight Booking Management System
+# DevRev Flight Booking Management System 👨‍✈️
 
 Welcome to the Flight Booking Management System! This system allows users to book flights, manage reservations, and perform various actions related to flight bookings. This application uses python's Django web framework as it's core backend technology and uses bootstrap library for styling the frontend
 
