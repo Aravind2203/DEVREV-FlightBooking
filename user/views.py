@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Bookings,Travel,Airports,Passengers
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 # Create your views here.
 
 User=get_user_model()
@@ -19,7 +20,12 @@ def searchFlights(request):
         if source==destination:
             messages.info(request,"Source and destination can't be same")
             return redirect("home")
+        
         date=request.POST.get("date",None)
+        date_object = datetime.strptime(date, '%Y-%m-%d').date()
+        if date_object<datetime.now().date():
+            messages.info(request,"Can't Search previous date")
+            return redirect("home")
         source_name=Airports.objects.get(id=source)
         destination_name=Airports.objects.get(id=destination)
         travels=Travel.objects.filter(date=date,flight_id__source__id=source,flight_id__destination__id=destination,remain__gt=0)

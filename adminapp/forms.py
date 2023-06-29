@@ -15,7 +15,7 @@ class AirPortForm(ModelForm):
 class FlightForm(ModelForm):
     class Meta:
         model=Flight
-        fields=['name','airline','source','destination','duration_of_travel']
+        fields=['name','airline','source','destination','duration_of_travel','price']
 
 class TravelForm(ModelForm):
     

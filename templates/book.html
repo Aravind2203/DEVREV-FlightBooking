@@ -15,10 +15,8 @@
     cursor: pointer;
     overflow: scroll;
   }
-  
   #text{
     position: absolute;
-   
     left: 50%;
     font-size: 50px;
     color: black;
@@ -68,11 +66,30 @@
     <form class="form container" method="post" action="/book/{{travel.id}}">
       {% csrf_token %}
       <input type="number" hidden value={{travel.flight_id.price}} id="hidden_price">
-        <p>Flight Name:{{travel.flight_id.name}}</p>
-        <p>Date:{{travel.date}}</p>
-        <p>From:{{travel.flight_id.source}}</p>
-        <p>To:{{travel.flight_id.destination.name}}</p>
-        <p>Time of Departure: {{travel.flight_id.time_of_departure}}</p>
+        <p>Flight Details</p>
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Flight Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+              <th scope="col">Price per seat</th>
+              <th scope="col">Time of departure</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">{{travel.flight_id.name}}</th>
+              <td>{{travel.date}}</td>
+              <td>{{travel.flight_id.source}}</td>
+              <td>{{travel.flight_id.destination.name}}</td>
+              <td>{{travel.flight_id.price}}</td>
+              <td>{{travel.flight_id.time_of_departure}}</td>
+            </tr>
+            
+          </tbody>
+        </table>
         <input type="number"  hidden id="number-pass" name="pass-num" value=1>
         <input type="number" hidden id="travel-id" name="travel-id" value="{{travel.id}}">
         <h2>Passengers</h2>
