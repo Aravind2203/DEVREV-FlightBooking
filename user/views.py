@@ -2,17 +2,30 @@ from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth import authenticate,login,logout,get_user_model
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Bookings
+from .models import Bookings,Travel,Airports,Passengers
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 User=get_user_model()
 def home(request):
-    return render(request,"home.html")
+    airports=Airports.objects.all()
+    return render(request,"home.html",context={"airports":airports})
 
 def searchFlights(request):
     if request.method=="POST":
         print(request.POST)
-    return render(request,"home.html")
+        source=request.POST.get("source",None)
+        destination=request.POST.get("destination",None)
+        date=request.POST.get("date",None)
+        source_name=Airports.objects.get(id=source)
+        destination_name=Airports.objects.get(id=destination)
+        travels=Travel.objects.filter(date=date,flight_id__source__id=source,flight_id__destination__id=destination,remain__gt=0)
+        
+        total_tavels=len(travels)
+
+        return render(request,"search.html",context={"flights":travels,"total":total_tavels,"source_name":source_name,"destination_name":destination_name,"date":date})
+
+
 
 def login_user(request):
     if request.method=="POST":
@@ -58,7 +71,9 @@ def signup_user(request):
 def user_profile(request):
     user=request.user
     booking=Bookings.objects.filter(user_id=user)
+    
     total_booking=len(booking)
+    print(total_booking)
     data={
         "name":user.name,
         "email":user.email,
@@ -80,3 +95,26 @@ def booking_details(request,id):
     print(booking.passengers_names)
     return render(request,"booking-detail.html",context={"booking":booking})
     
+
+@login_required(login_url="/login")
+@csrf_exempt
+def book_flight(request,id):
+    try:
+        travel=Travel.objects.get(id=id)
+    except:
+        raise ValueError("Invalid travel id given")
+    if request.method=="POST":
+        count=request.POST.get('count')
+        passengers=[]
+        for i in range(int(count)):
+            name=request.POST.get(f'name-{i+1}')
+            age=request.POST.get(f'age-{i+1}')
+            p=Passengers.objects.create(name=name,age=int(age))
+            passengers.append(p)
+        b=Bookings(user_id=request.user,travel=travel,passengers_count=int(count))
+        b.save()
+        b.passengers_names.set(passengers)
+        travel.remain-=int(count)
+        travel.save()
+        
+    return render(request,"book.html",context={"travel":travel})

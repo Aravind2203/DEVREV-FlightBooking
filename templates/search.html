@@ -1,0 +1,27 @@
+{% extends 'home.html' %}
+{% block main %}
+<div class="jumbotron container">
+    <div class="jumbotron">
+        
+        <h2>Source:{{source_name}}</h2>
+        <h2>Destination:{{destination_name}}</h2>
+        <h3>Date of journey: {{date}}</h3>
+        <hr>
+       {% if not total %}
+       <h2>Ooops..! No flights found </h2>
+       {% else %}
+        <h2>Available Flights</h2>
+      <ul class="list-group">
+        {% for flight in flights %}
+        <li class="list-group-item">
+            <p><a href="{% url 'book' flight.id %}">Airline : {{flight.flight_id.airline.name}}</a></p>
+            <p>Date:{{date}}</p>
+            <p>Remaining Seats: {{flight.remain}}</p>
+        </li>
+        
+        {% endfor %}
+      </ul>
+      {% endif %}
+      </div>
+  </div>
+{% endblock main %}

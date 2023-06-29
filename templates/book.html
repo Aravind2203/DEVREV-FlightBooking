@@ -1,0 +1,177 @@
+{% extends 'home.html' %}
+{% block main %}
+<style>
+  #overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+  
+  #text{
+    position: absolute;
+   
+    left: 50%;
+    font-size: 50px;
+    color: black;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+  }
+  </style>
+<div id="overlay" >
+  <h2 id="text">Confirm Booking</h2>
+  <div class="jumbotron container" >
+    <button type="button" class="btn btn-default" onclick="off()">Back</button>
+    <form class="form container" method="post" action="/signup">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name-user">Flight Name: {{travel.flight_id.name}}</label>
+      </div>
+      <div class="form-group">
+        <label for="phone-user">Date:{{travel.date}}</label>
+      </div>
+        <div class="form-group">
+          <label for="email-user">From:{{travel.flight_id.source}}</label>
+        </div>
+        <div class="form-group">
+          <label for="pass-user">To:{{travel.flight_id.destination.name}}</label>
+        </div>
+      </form>
+      <div id="new_form">
+      </div>
+  </div>
+</div>
+
+
+<div class="jumbotron container">
+    <form class="form container" method="post" action="/book/{{travel.id}}">
+      {% csrf_token %}
+        <p>Flight Name:{{travel.flight_id.name}}</p>
+        <p>Date:{{travel.date}}</p>
+        <p>From:{{travel.flight_id.source}}</p>
+        <p>To:{{travel.flight_id.destination.name}}</p>
+        <p>Time of Departure: {{travel.flight_id.time_of_departure}}</p>
+        <input type="number"  hidden id="number-pass" name="pass-num" value=1>
+        <input type="number" hidden id="travel-id" name="travel-id" value="{{travel.id}}">
+        <h2>Passengers</h2>
+        <button type="button" class="btn btn-primary" id="add">Add Passenger</button>
+        <button type="button" class="btn btn-danger" id="del">Del Passenger </button>
+        <hr>
+
+        <div id="passenger-group">
+            
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" name="name-1" id="name-1" required>
+                <label>Age:</label>
+                <input type="number" name="age-1" id="age-1" required>
+            </div>
+        </div>
+      </form>
+      <button type="button" class="btn btn-default" id="proceed">Proceed</button>
+  </div>
+  <script>
+    let count=1
+    document.getElementById("add").addEventListener("click",(e)=>{
+        if(count>=6){
+          alert("Maximum 6 passengers")
+        }
+        else{
+        let f_group=document.createElement("div")
+        let form_ele=`<label>Name:</label><input type="text" name="name-${count+1}" id="name-${count+1}" required><label>Age:</label><input type="number" name="age-${count+1}" id="age-${count+1}" required>`
+        f_group.setAttribute("class","form-group")
+        f_group.innerHTML=form_ele
+        document.getElementById("passenger-group").appendChild(f_group)
+        count=count+1;
+        document.getElementById("number-pass").value=count
+        }
+    })
+
+    
+    let passengers=[]
+    document.getElementById("proceed").addEventListener('click',(e)=>{
+      passengers=[]  
+      let flag=0
+      while(passengers.length>0){
+        passengers.pop()
+
+      }
+      for(let i=1;i<=count;i++){
+        let name_val=document.getElementById(`name-${i}`).value
+        let age_val=document.getElementById(`age-${i}`).value
+        if(name_val=="" || age_val==""){
+          flag=1
+          break
+        }
+        passengers.push({"name":name_val,"age":age_val})
+      }
+      
+
+      function constructForm(passengers){
+        console.log(passengers[0].name)
+        let travel_id=document.getElementById("travel-id").value
+        let form=document.createElement("form")
+        form.setAttribute("class","form container")
+        form.setAttribute("method","post")
+        form.setAttribute("action",`/book/${travel_id}`)
+        let count_ele=document.createElement("input")
+        count_ele.hidden=true
+        count_ele.setAttribute("value",passengers.length)
+        count_ele.setAttribute("name","count")
+        form.appendChild(count_ele)
+        for(let i=0;i<passengers.length;i++){
+          let name_ele=document.createElement("input")
+          name_ele.setAttribute("name",`name-${i+1}`)
+          name_ele.readOnly=true
+          name_ele.setAttribute("value",passengers[i].name)
+
+          let age_ele=document.createElement("input")
+          age_ele.setAttribute("name",`age-${i+1}`)
+          age_ele.readOnly=true
+          age_ele.setAttribute("value",passengers[i].age)
+          form.appendChild(name_ele)
+          form.appendChild(age_ele)
+          let hr=document.createElement("hr")
+          form.appendChild(hr)
+        }
+        let submit_button=document.createElement("button")
+        submit_button.setAttribute("type","submit")
+        submit_button.setAttribute("class","btn btn-default")
+        submit_button.innerHTML="Book Ticket"
+        form.appendChild(submit_button)
+        document.getElementById("new_form").appendChild(form)
+        
+      }
+      if (flag==1){
+        alert("Please Enter all values")
+      }
+      else{
+      document.getElementById("overlay").style.display = "block";
+      constructForm(passengers)
+      }
+    })
+
+    document.getElementById("del").addEventListener("click",(e)=>{
+        let pg=document.getElementById("passenger-group")
+        if(pg.lastChild!=pg.firstChild){
+            pg.removeChild(pg.lastChild)
+            count=count-1
+            document.getElementById("number-pass").value=count  
+            
+        }
+    })
+    function off() {
+      let r=document.getElementById("new_form")
+      r.removeChild(r.lastChild)
+      document.getElementById("overlay").style.display = "none";
+    }
+    
+  </script>
+{% endblock main %}

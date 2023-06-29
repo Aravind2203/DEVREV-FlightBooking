@@ -17,7 +17,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Flight Booking System</a>
+                <a class="navbar-brand" href="/">Flight Booking System</a>
               </div>              
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -44,9 +44,10 @@
                 <div class="form-group">
                   <label for="exampleInputEmail2">Source</label>
                   <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="source">
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    {% for airport in airports %}
+                    
+                    <option value="{{airport.id}}">{{airport.name}}</option>
+                    {% endfor %}
                   </select>
                 </div>
                 <div class="form-group">
@@ -54,9 +55,10 @@
                   <div class="form-group">
                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="destination">
                       
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      {% for airport in airports %}
+                    
+                    <option value="{{airport.id}}">{{airport.name}}</option>
+                    {% endfor %}
                     </select>
                   </div>
                 </div>
