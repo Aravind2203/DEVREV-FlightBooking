@@ -1,0 +1,18 @@
+{% extends 'adminapp/base.html' %}
+{% block main %}
+<div class="jumbotron container">
+    <h2>Add Flight</h2>
+    <form class="form container" method="post" action="/manage/flight/add-flight">
+      {% csrf_token %}
+       {% for field in form %}
+      
+       
+        <b>{{ field.label_tag }}</b> -{{ field }}
+        <br>
+       {% endfor %}
+       <label>Time of departure</label>
+       <input type="time" name="time_of_departure" required>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+  </div>
+{% endblock main %}

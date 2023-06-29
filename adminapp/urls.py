@@ -9,4 +9,8 @@ urlpatterns=[
     path("fight-detail/<int:id>",flight_details,name="flight_detail"),
     path("travel-detail/<int:id>",travel_details,name="travel-detail"),
     path("booking-detail-admin/<int:id>",booking_details,name="booking-detail-admin"),
+    path("add-airline",add_airline,name="add-airline"),
+    path("add-airport",add_airport,name="add-airport"),
+    path("add-flight",add_flight,name="add-flight"),
+    path("add-travel",add_travel,name="add-travel"),
 ]

@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import get_user_model,login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from user.models import AirLine,Airports,Flight,Bookings,Travel
+from .forms import *
+from datetime import datetime,time
 User=get_user_model()
 # Create your views here.
 def login_admin(request):
@@ -80,3 +82,67 @@ def booking_details(request,id):
         raise ValueError("Invalid booking Id")
     passengers=booking.passengers_names.all()
     return render(request,"adminapp/booking-detail.html",context={"booking":booking,"passengers":passengers})
+
+@login_required(login_url="/manage/flight/login-admin")
+def add_airport(request):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    form=AirPortForm()
+
+    if request.method=="POST":
+        form=AirPortForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-home")
+    return render(request,'adminapp/add-airport.html',context={"form":form})
+
+
+@login_required(login_url="/manage/flight/login-admin")
+def add_airline(request):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    form=AirLineForm()
+    if request.method=="POST":
+        form=AirLineForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("admin-home")
+    return render(request,"adminapp/add-airline.html",context={"form":form})
+
+
+@login_required(login_url="/manage/flight/login-admin")
+def add_flight(request):
+     
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    form=FlightForm()
+    if request.method=="POST":
+        time_string=request.POST.get("time_of_departure")
+        print(time_string)
+        hour, minute = map(int, time_string.split(':'))
+        time_object = time(hour=hour, minute=minute)
+        form=FlightForm(request.POST)
+        if form.is_valid():
+            object=form.save()
+            object.time_of_departure=time_object
+            object.save()
+            return redirect("admin-home")
+    return render(request,"adminapp/add-flight.html",context={"form":form})
+
+
+@login_required(login_url="/manage/flight/login-admin")
+def add_travel(request):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    form=TravelForm()
+    if request.method=='POST':
+        print(request.POST)
+        date=request.POST.get("date",None)
+        date_object = datetime.strptime(date, '%Y-%m-%d').date()
+        form=TravelForm(request.POST)
+        if form.is_valid():
+            object=form.save()
+            object.date=date_object
+            object.save()
+            return redirect("admin-home")
+    return render(request,"adminapp/add-travel.html",context={"form":form})

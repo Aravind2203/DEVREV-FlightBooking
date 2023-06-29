@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.contrib.admin.widgets import AdminDateWidget
 from .manager import UserManager
 from django.utils import timezone 
 # Create your models here.
@@ -35,7 +35,7 @@ class Flight(models.Model):
     airline=models.ForeignKey(AirLine,on_delete=models.CASCADE)
     source=models.ForeignKey(Airports,on_delete=models.SET_NULL,blank=True,null=True,related_name="depart")
     destination=models.ForeignKey(Airports,on_delete=models.SET_NULL,blank=True,null=True,related_name="arrive")
-    time_of_departure=models.TimeField(default=timezone.now().time())
+    time_of_departure=models.TimeField(null=True,blank=True)
     duration_of_travel=models.PositiveIntegerField()
 
     def __str__(self):
@@ -44,8 +44,8 @@ class Flight(models.Model):
 class Travel(models.Model):
     flight_id=models.ForeignKey(Flight,on_delete=models.CASCADE)
     remain=models.PositiveIntegerField(default=60)
-    date=models.DateField(default=timezone.now().date())
-    status=models.CharField(max_length=10)
+    date=models.DateField(null=True,blank=True)
+    status=models.CharField(max_length=10,default="active")
 
     def __str__(self):
         return str(self.flight_id)+str(self.date)
