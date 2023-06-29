@@ -50,6 +50,7 @@ The application is deployed on pythonanwhere cloud server.
 
    ```bash
    git clone https://github.com/Aravind2203/DEVREV-FlightBooking
+   cd DEVREV-FlightBooking
    
    ```
 2. Activate Virtual Environment and Install dependencies
