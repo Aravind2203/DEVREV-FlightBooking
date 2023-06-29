@@ -13,6 +13,7 @@
     background-color: rgba(0,0,0,0.5);
     z-index: 2;
     cursor: pointer;
+    overflow: scroll;
   }
   
   #text{
@@ -80,8 +81,8 @@
   <script>
     let count=1
     document.getElementById("add").addEventListener("click",(e)=>{
-        if(count>=6){
-          alert("Maximum 6 passengers")
+        if(count>=5){
+          alert("Maximum 5 passengers")
         }
         else{
         let f_group=document.createElement("div")

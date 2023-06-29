@@ -1,0 +1,48 @@
+{% extends 'adminapp/base.html' %}
+{% block main %}
+
+<div class="jumbotron container">
+    <h1>Welcome to flight management Admin</h1>
+    <h2>Airlines <a class="btn btn-primary" href="youtube.com">Add Airline</a></h2>
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">License Number</th>
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for airline in airlines %}
+          <tr>
+            <th scope="row"><a href="{% url 'airline-detail' airline.id %}">{{airline.id}}</a></th>
+            <td><a href="{% url 'airline-detail' airline.id %}">{{airline.license_number}}</a></td>
+            <td>{{airline.name}}</td>
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+    <hr>
+    <h2>Airports <a class="btn btn-primary" href="youtube.com">Add Airport</a></h2>
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            
+            <th scope="col">Name</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for airport in airports %}
+          <tr>
+            <th scope="row">{{airport.id}}</th>
+            
+            <td>{{airport.name}}</td>
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+  </div>
+{% endblock main %}

@@ -1,0 +1,31 @@
+{% extends 'adminapp/base.html' %}
+{% block main %}
+<div class="jumbotron container">
+    <h2>Flight Name: {{flight.name}}</h2>
+    <h2>Source: {{flight.source}}</h2>
+    <h2>Destination: {{flight.destination}} </h2>
+    <hr>
+    <h2>Travel Day details</h2>
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Date</th>
+            <th scope="col">Seats Remaining</th>
+            <th scope="col">Status</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+            {% for travel in travels %}
+          <tr>
+            <th scope="row"><a href="{% url 'travel-detail' travel.id %}">{{travel.id}}</a></th>
+            <td><a href="{% url 'travel-detail' travel.id %}">{{travel.date}}</a></td>
+            <td>{{travel.remain}}</td>
+            <td><span class="badge badge-success">{{travel.status}}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock main %}

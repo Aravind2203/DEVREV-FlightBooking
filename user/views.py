@@ -92,8 +92,8 @@ def booking_details(request,id):
         raise ValueError("Invalid booking Id")
     if user!=booking.user_id:
         return HttpResponse("<h1>You are not authorized to view this page</h1>")
-    print(booking.passengers_names)
-    return render(request,"booking-detail.html",context={"booking":booking})
+    passengers=booking.passengers_names.all()
+    return render(request,"booking-detail.html",context={"booking":booking,"passengers":passengers})
     
 
 @login_required(login_url="/login")
