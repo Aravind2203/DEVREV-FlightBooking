@@ -2,6 +2,21 @@
 
 Welcome to the Flight Booking Management System! This system allows users to book flights, manage reservations, and perform various actions related to flight bookings.
 
+## Deployment
+
+The application is deployed on pythonanwhere cloud server.
+1. Admin url:
+```
+    ![Admin-app](http://aravind2203.pythonanywhere.com/manage/flight/home)
+    Email: aravind@gmail.com
+    Password: 123 
+```
+2. Normal user url:
+```
+    ![User-app](http://aravind2203.pythonanywhere.com/)
+    Email: normal@gmail.com
+    Password: 1234567890
+```
 ## Tasks Completed
 ### User
 - [X] Login
