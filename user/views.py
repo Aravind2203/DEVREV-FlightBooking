@@ -13,9 +13,12 @@ def home(request):
 
 def searchFlights(request):
     if request.method=="POST":
-        print(request.POST)
+        
         source=request.POST.get("source",None)
         destination=request.POST.get("destination",None)
+        if source==destination:
+            messages.info(request,"Source and destination can't be same")
+            return redirect("home")
         date=request.POST.get("date",None)
         source_name=Airports.objects.get(id=source)
         destination_name=Airports.objects.get(id=destination)
@@ -105,6 +108,9 @@ def book_flight(request,id):
         raise ValueError("Invalid travel id given")
     if request.method=="POST":
         count=request.POST.get('count')
+        if int(count)>travel.remain:
+            messages.info(request,"Not enough seats.")
+            return redirect("book",id=id)
         passengers=[]
         for i in range(int(count)):
             name=request.POST.get(f'name-{i+1}')
@@ -116,5 +122,6 @@ def book_flight(request,id):
         b.passengers_names.set(passengers)
         travel.remain-=int(count)
         travel.save()
+        messages.info(request,"Booked Successfully")
         
     return render(request,"book.html",context={"travel":travel})

@@ -10,6 +10,7 @@
             <th scope="col">id</th>
             <th scope="col">License Number</th>
             <th scope="col">Name</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@
             <th scope="row"><a href="{% url 'airline-detail' airline.id %}">{{airline.id}}</a></th>
             <td><a href="{% url 'airline-detail' airline.id %}">{{airline.license_number}}</a></td>
             <td>{{airline.name}}</td>
+            <td><a href="{% url 'delete-airline' airline.id %}" class="btn btn-danger">Delete</a></td>
           </tr>
           {% endfor %}
           
@@ -31,6 +33,7 @@
             <th scope="col">id</th>
             
             <th scope="col">Name</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +42,7 @@
             <th scope="row">{{airport.id}}</th>
             
             <td>{{airport.name}}</td>
+            <td><a href="{% url 'delete-airport' airport.id %}" class="btn btn-danger">Delete</a></td>
           </tr>
           {% endfor %}
           

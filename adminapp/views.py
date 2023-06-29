@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from user.models import AirLine,Airports,Flight,Bookings,Travel
 from .forms import *
 from datetime import datetime,time
+from django.contrib import messages
+
 User=get_user_model()
 # Create your views here.
 def login_admin(request):
@@ -93,7 +95,10 @@ def add_airport(request):
         form=AirPortForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.info(request,"Airport added Successfully")
             return redirect("admin-home")
+        else:
+            messages.info(request,"Operation failed")
     return render(request,'adminapp/add-airport.html',context={"form":form})
 
 
@@ -106,7 +111,11 @@ def add_airline(request):
         form=AirLineForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.info(request,"Airline added Successfully")
             return redirect("admin-home")
+        else:
+            messages.info(request,"Operation Failed")
+        
     return render(request,"adminapp/add-airline.html",context={"form":form})
 
 
@@ -126,7 +135,10 @@ def add_flight(request):
             object=form.save()
             object.time_of_departure=time_object
             object.save()
+            messages.info(request,"Flight addedd Successfully")
             return redirect("admin-home")
+        else:
+            messages.info(request,"Operation Failed")
     return render(request,"adminapp/add-flight.html",context={"form":form})
 
 
@@ -144,5 +156,57 @@ def add_travel(request):
             object=form.save()
             object.date=date_object
             object.save()
+            messages.info(request,"Journey Added Successfully")
             return redirect("admin-home")
+        else:
+            messages.info(request,"Operation Failed")
     return render(request,"adminapp/add-travel.html",context={"form":form})
+
+
+@login_required(login_url='/manage/flight/login-admin')
+def delete_airline(request,id):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    try:
+        airline=AirLine.objects.get(id=id)
+        airline.delete()
+        messages.info(request,"Deletion success")
+    except:
+        pass
+    return redirect("admin-home")
+
+@login_required(login_url='/manage/flight/login-admin')
+def delete_airport(request,id):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    try:
+        airport=Airports.objects.get(id=id)
+        airport.delete()
+        messages.info(request,"Deletion success")
+    except:
+        pass
+    return redirect("admin-home")
+
+@login_required(login_url='/manage/flight/login-admin')
+def delete_flight(request,id):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    try:
+        flight=Flight.objects.get(id=id)
+        flight.delete()
+        messages.info(request,"Deletion success")
+    except:
+        pass
+    return redirect("admin-home")
+
+@login_required(login_url='/manage/flight/login-admin')
+def delete_travel(request,id):
+    if not request.user.is_superuser:
+        return redirect("unauthorized")
+    try:
+        travel=Travel.objects.get(id=id)
+        travel.delete()
+        messages.info(request,"Deletion success")
+    except:
+        pass
+    return redirect("admin-home")

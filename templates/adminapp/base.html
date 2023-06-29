@@ -32,7 +32,11 @@
               </div>
             </div>
           </nav>
-         
+          {% for message in messages %}
+          <div class="alert alert-success container" role="alert">
+            {{message}}
+          </div>
+          {% endfor %}
           {% block main %}
           {% endblock main %}
     </body>

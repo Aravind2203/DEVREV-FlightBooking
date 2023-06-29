@@ -37,6 +37,7 @@ class Flight(models.Model):
     destination=models.ForeignKey(Airports,on_delete=models.SET_NULL,blank=True,null=True,related_name="arrive")
     time_of_departure=models.TimeField(null=True,blank=True)
     duration_of_travel=models.PositiveIntegerField()
+    price=models.PositiveIntegerField(null=True,blank=True)
 
     def __str__(self):
         return self.name

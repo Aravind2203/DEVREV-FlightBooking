@@ -13,6 +13,7 @@
             <th scope="col">Date</th>
             <th scope="col">Seats Remaining</th>
             <th scope="col">Status</th>
+            <th scope="col">Action</th>
            
           </tr>
         </thead>
@@ -23,6 +24,7 @@
             <td><a href="{% url 'travel-detail' travel.id %}">{{travel.date}}</a></td>
             <td>{{travel.remain}}</td>
             <td><span class="badge badge-success">{{travel.status}}</span></td>
+            <td><a href="{% url 'delete-travel' travel.id %}" class="btn btn-danger">Delete</a></td>
           </tr>
           {% endfor %}
         </tbody>

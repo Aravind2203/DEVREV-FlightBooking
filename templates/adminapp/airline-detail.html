@@ -14,6 +14,7 @@
             <th scope="col">Destination</th>
             <th scope="col">Departure</th>
             <th scope="col">Duration</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
             <td>{{flight.destination}}</td>
             <td>{{flight.time_of_departure}}</td>
             <td>{{flight.duration_of_travel}}</td>
+            <td><a href="{% url 'delete-flight' flight.id %}" class="btn btn-danger">Delete</a></td>
           </tr>
           {% endfor %}
           

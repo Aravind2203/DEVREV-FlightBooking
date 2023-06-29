@@ -13,4 +13,8 @@ urlpatterns=[
     path("add-airport",add_airport,name="add-airport"),
     path("add-flight",add_flight,name="add-flight"),
     path("add-travel",add_travel,name="add-travel"),
+    path("delete-airport/<int:id>",delete_airport,name="delete-airport"),
+    path("delete-airline/<int:id>",delete_airline,name="delete-airline"),
+    path("delete-flight/<int:id>",delete_flight,name="delete-flight"),
+    path("delete-travel/<int:id>",delete_travel,name="delete-travel"),
 ]
