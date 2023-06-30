@@ -17,6 +17,14 @@ The application is deployed on pythonanwhere cloud server.
     Email: normal@gmail.com
     Password: 1234567890
 ```
+## Steps to Add Data via Admin
+
+1. Login into admin url
+2. Create new Airline
+3. Select the new Airline to add Flights under that Airline
+4. Select the new Flight to create Journey for that Flight
+
+**The Journey represents the single travel day details of a Flight.**
 ## Tasks Completed
 ### User
 - [X] Login
@@ -73,6 +81,6 @@ The application is deployed on pythonanwhere cloud server.
 
 5. Visit localhost:8000 in your browser
 
-## DBSchema
+## DB Schema
 
 ![FlighBooking App](https://github.com/Aravind2203/DEVREV-FlightBooking/assets/71716685/6fe46c23-c985-4834-95a0-9be472d0a139)
